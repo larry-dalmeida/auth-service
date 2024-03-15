@@ -2,7 +2,7 @@ import { describe, expect, beforeAll, it } from "@jest/globals";
 import request from "supertest";
 import { pick } from "lodash";
 
-import { initializeServer } from "../src/utils";
+import { initializeServer } from "../server/src/utils";
 import { generateMockCredentials } from "./mocks";
 
 describe("Login", () => {
