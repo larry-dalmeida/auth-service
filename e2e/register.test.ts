@@ -1,7 +1,7 @@
 import { describe, expect, beforeAll, it } from "@jest/globals";
 import request from "supertest";
 
-import { initializeServer } from "../server/src/utils";
+import { initializeServer } from "../src/utils";
 import { generateMockCredentials } from "./mocks";
 
 describe("Registration", () => {
