@@ -1,5 +1,6 @@
 # Local Config
-*.env
+.env
+.env.test
 
 # Generated
 node_modules/

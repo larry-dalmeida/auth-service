@@ -21,8 +21,6 @@ const ERROR_MESSAGES = {
 const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
-  console.log(email, password);
-
   try {
     const result = await getUserByEmail(email);
 
@@ -33,7 +31,9 @@ const login = async (req: Request, res: Response) => {
 
     const user = result.rows[0];
     const isMatch = await isValidPassword(password, user.password);
-    return isMatch ? res.send({ token: getToken(user.id) }) : res.status(400).send(ERROR_MESSAGES.INVALID_CREDENTIALS);
+    return isMatch
+      ? res.send({ token: getToken(user.id) })
+      : res.status(400).send(ERROR_MESSAGES.INVALID_CREDENTIALS);
   } catch (error) {
     res.status(500).send(ERROR_MESSAGES.ERROR_LOGGING_IN);
   }
