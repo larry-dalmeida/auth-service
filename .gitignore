@@ -4,6 +4,7 @@
 
 # Generated
 node_modules/
+coverage/
 
 # Editor
 *.todo
