@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "pm2 start ecosystem.config.js",
-    "test:e2e": "jest --watch",
+    "test": "jest",
+    "test:e2e": "jest --config ./jest.e2e.config.js",
     "prepare": "husky"
   },
   "author": "",
