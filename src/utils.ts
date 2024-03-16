@@ -28,10 +28,9 @@ export const initializeServer = () => {
   return server;
 };
 
-export const startServer = () => {
-  const PORT = process.env.PORT;
+export const startServer = (port) => {
   const server = initializeServer();
-  server.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT}`);
+  server.listen(port, () => {
+    console.log(`Listening on port ${port}`);
   });
 };
