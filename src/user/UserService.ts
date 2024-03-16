@@ -6,6 +6,7 @@ import {
   MalformedRequestError,
   UserAlreadyExistsError,
 } from "./errors";
+import { UserLoginDTO, UserRegisterDTO } from "./dto";
 
 class UserService {
   static getToken(userId: string, jwtSecret: string) {
@@ -29,7 +30,8 @@ class UserService {
     this.jwtSecret = jwtSecret;
   }
 
-  async login(email: string, password: string) {
+  async login(userLoginDTO: UserLoginDTO) {
+    const { email, password } = userLoginDTO;
     if (!email || !password) {
       throw new MalformedRequestError();
     }
@@ -49,7 +51,8 @@ class UserService {
     throw new InvalidCredentialsError();
   }
 
-  async register(name: string, email: string, password: string) {
+  async register(userRegistrationDTO: UserRegisterDTO) {
+    const { name, email, password } = userRegistrationDTO;
     const existingUser = await this.userRepository.getUserByEmail(email);
 
     if (existingUser) {

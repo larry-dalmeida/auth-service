@@ -1,3 +1,4 @@
 import { startServer } from './utils';
 
-startServer();
+const PORT = process.env.PORT;
+startServer(PORT);

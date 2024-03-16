@@ -1,5 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
+import morgan from 'morgan';
 import { Pool } from "pg";
 
 import { Route } from "./types";
@@ -13,6 +14,7 @@ const createServer = (routes: Route[]) => {
 
   // Common Middleware
   app.use(bodyParser.json());
+  app.use(morgan('combined'))
 
   routes.forEach((route: Route) => {
     app[route.method](route.path, route.handler);
