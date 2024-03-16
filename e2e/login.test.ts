@@ -14,6 +14,7 @@ describe("Login", () => {
 
   it("should login a registered user", async () => {
     const credentials = generateMockCredentials();
+
     await request(server)
       .post("/register")
       .send(credentials);
