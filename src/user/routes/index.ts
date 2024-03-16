@@ -1,6 +1,7 @@
-import register from "../service/register";
-import login from "../service/login";
+import * as userController from "../controller";
+
 import { Route } from "../../app/types";
+import register from "../service/register";
 
 const routes: Route[] = [
   {
@@ -11,7 +12,7 @@ const routes: Route[] = [
   {
     path: "/login",
     method: "post",
-    handler: login,
+    handler: userController.login,
   },
 ];
 

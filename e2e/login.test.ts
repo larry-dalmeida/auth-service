@@ -18,9 +18,11 @@ describe("Login", () => {
       .post("/register")
       .send(credentials);
 
+    const loginData = pick(credentials, ["email", "password"])
+
     const res = await request(server)
       .post("/login")
-      .send(pick(credentials, ["email", "password"]));
+      .send(loginData);
 
     expect(res.statusCode).toEqual(200);
     expect(res.body).toHaveProperty("token");

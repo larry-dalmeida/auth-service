@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 
 import createServer from "./app/server";
-import userRoutes from "./users/routes";
+import userRoutes from "./user/routes";
 import appRoutes from "./app/routes";
 
 const loadConfig = () => {
