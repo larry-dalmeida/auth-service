@@ -47,3 +47,27 @@ export class MalformedRequestError extends Error {
     }
   }
 }
+
+export class UserAlreadyExistsError extends Error {
+  static defaultCode = StatusCodes.CONFLICT;
+  static defaultMessage = "User already exists";
+
+  code: number;
+  message: string;
+
+  constructor(
+    customMessage = MalformedRequestError.defaultMessage,
+    code = MalformedRequestError.defaultCode
+  ) {
+    super(customMessage);
+    this.name = this.constructor.name;
+    this.code = code;
+    this.message = customMessage;
+
+    if (typeof Error.captureStackTrace === "function") {
+      Error.captureStackTrace(this, this.constructor);
+    } else {
+      this.stack = new Error(this.message).stack;
+    }
+  }
+}

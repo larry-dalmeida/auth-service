@@ -2,7 +2,6 @@ import express from "express";
 import bodyParser from "body-parser";
 import { Pool } from "pg";
 
-import { initPool } from "./db";
 import { Route } from "./types";
 
 declare global {
@@ -10,7 +9,6 @@ declare global {
 }
 
 const createServer = (routes: Route[]) => {
-  global.db = initPool();
   const app = express();
 
   // Common Middleware

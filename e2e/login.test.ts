@@ -14,15 +14,14 @@ describe("Login", () => {
 
   it("should login a registered user", async () => {
     const credentials = generateMockCredentials();
+
     await request(server)
       .post("/register")
       .send(credentials);
 
-    const loginData = pick(credentials, ["email", "password"])
-
     const res = await request(server)
       .post("/login")
-      .send(loginData);
+      .send(pick(credentials, ["email", "password"]));
 
     expect(res.statusCode).toEqual(200);
     expect(res.body).toHaveProperty("token");
