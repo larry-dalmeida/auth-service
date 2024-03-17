@@ -1,13 +1,14 @@
 import { describe, expect, beforeAll, it } from "@jest/globals";
 import request from "supertest";
 import { pick } from "lodash";
+import { Express } from "express";
 
 import { initializeServer } from "../src/utils";
 import { generateMockCredentials } from "./mocks";
 import AppConfig from "../src/config/AppConfig";
 
 describe("Registration", () => {
-  let server;
+  let server: Express;
 
   beforeAll(() => {
     server = initializeServer(new AppConfig());

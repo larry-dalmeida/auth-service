@@ -1,30 +1,24 @@
-version: '3'
+version: "3"
 services:
   authDB:
     image: postgres:latest
     ports:
       - "5433:5432"
     environment:
-      - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=auth_users
-    healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "psql -U postgres -d auth_users -c 'SELECT CURRENT_DATE'",
-        ]
-      interval: 10s
-      timeout: 5s
-      retries: 5
     volumes:
-      - ./local/init_database_sql:/init_database_sql
-  flyway:
+      - ./local/init_database_sql:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      retries: 5
+      timeout: 5s
+  migrations:
     image: flyway/flyway
+    restart: on-failure
     depends_on:
       authDB:
         condition: service_healthy
-      
     volumes:
       - ./migrations:/flyway/sql
     environment:
