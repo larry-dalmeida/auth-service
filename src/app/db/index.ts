@@ -1,9 +1,5 @@
 import { Pool, QueryResult, QueryResultRow } from "pg";
-
-type DatabaseConfig = {
-  name: string;
-  databaseUrl: string;
-};
+import { DatabaseConfig } from "../../config/AppConfig";
 
 class Database {
   name: string;
@@ -11,9 +7,7 @@ class Database {
 
   constructor(config: DatabaseConfig) {
     this.name = config.name;
-    this.connectionPool = new Pool({
-      connectionString: config.databaseUrl,
-    });
+    this.connectionPool = new Pool(config.poolConfig);
 
     this.endConnectionPool = this.endConnectionPool.bind(this);
     this.query = this.query.bind(this);

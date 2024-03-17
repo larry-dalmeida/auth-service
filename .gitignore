@@ -5,6 +5,7 @@
 # Generated
 node_modules/
 coverage/
+dist/
 
 # Editor
 *.todo

@@ -1,5 +1,3 @@
-import dotenv from "dotenv";
-
 import createServer from "./app/server";
 import appRoutes from "./app/routes";
 import UserRoutes from "./user/UserRoutes";
@@ -19,7 +17,7 @@ export const initializeServer = (config: AppConfig) => {
   return server;
 };
 
-export const startServer = (config) => {
+export const startServer = (config: AppConfig) => {
   const server = initializeServer(config);
   server.listen(config.server.port, () => {
     console.log(`Listening on port ${config.server.port}`);

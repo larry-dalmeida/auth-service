@@ -1,10 +1,15 @@
-import { MalformedRequestError } from "./errors";
+import { MalformedRequestError } from "../errors";
+
+type UserEntityData = {
+  email: string;
+  password: string;
+};
 
 class UserEntity {
   email: string;
   password: string;
 
-  constructor(data) {
+  constructor(data: UserEntityData) {
     this.email = data.email;
     this.password = data.password;
   }

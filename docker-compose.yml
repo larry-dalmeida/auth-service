@@ -1,0 +1,28 @@
+version: "3"
+services:
+  authDB:
+    image: postgres:latest
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./local/init_database_sql:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      retries: 5
+      timeout: 5s
+  migrations:
+    image: flyway/flyway
+    restart: on-failure
+    depends_on:
+      authDB:
+        condition: service_healthy
+    volumes:
+      - ./migrations:/flyway/sql
+    environment:
+      - FLYWAY_URL=jdbc:postgresql://authDB/auth_users
+      - FLYWAY_USER=postgres
+      - FLYWAY_PASSWORD=postgres
+    command: ["-X", "migrate"]
