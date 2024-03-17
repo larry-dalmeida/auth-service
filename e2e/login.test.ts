@@ -4,12 +4,13 @@ import { pick } from "lodash";
 
 import { initializeServer } from "../src/utils";
 import { generateMockCredentials } from "./mocks";
+import AppConfig from "../src/config/AppConfig";
 
 describe("Login", () => {
   let server;
 
   beforeAll(() => {
-    server = initializeServer();
+    server = initializeServer(new AppConfig());
   });
 
   it("should login a registered user", async () => {

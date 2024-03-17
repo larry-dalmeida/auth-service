@@ -1,7 +1,7 @@
-import { Pool } from "pg";
+import Database from "../app/db";
 
 class UserRepository {
-  constructor(private db: Pool) {
+  constructor(private db: Database) {
     this.db = db;
   }
 
@@ -22,4 +22,4 @@ class UserRepository {
   }
 }
 
-export default UserRepository
+export default UserRepository;

@@ -3,12 +3,13 @@ import request from "supertest";
 
 import { initializeServer } from "../src/utils";
 import { generateMockCredentials } from "./mocks";
+import AppConfig from "../src/config/AppConfig";
 
 describe("Registration", () => {
   let server;
 
   beforeAll(() => {
-    server = initializeServer();
+    server = initializeServer(new AppConfig());
   });
 
   it("should register a new user", async () => {
