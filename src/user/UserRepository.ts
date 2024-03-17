@@ -1,14 +1,14 @@
-import { Pool } from "pg";
+import Database from "../app/db";
 
 class UserRepository {
-  constructor(private db: Pool) {
+  constructor(private db: Database) {
     this.db = db;
   }
 
-  async createUser(name: string, email: string, hashedPassword: string) {
+  async createUser(email: string, hashedPassword: string) {
     const result = await this.db.query(
-      "INSERT INTO app.users (name, email, password) VALUES ($1, $2, $3) RETURNING id, email, name",
-      [name, email, hashedPassword]
+      "INSERT INTO app.users (email, password) VALUES ($1, $2) RETURNING id, email",
+      [email, hashedPassword]
     );
 
     return result.rows[0];
@@ -18,8 +18,8 @@ class UserRepository {
     const result = await db.query("SELECT * FROM app.users WHERE email = $1", [
       email,
     ]);
-    return result.rows[0];
+    return result.rows.length === 0 ? null : result.rows[0];
   }
 }
 
-export default UserRepository
+export default UserRepository;

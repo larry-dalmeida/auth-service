@@ -1,12 +1,12 @@
 import express from "express";
 import bodyParser from "body-parser";
 import morgan from 'morgan';
-import { Pool } from "pg";
+import Database from "./db";
 
 import { Route } from "./types";
 
 declare global {
-  var db: Pool
+  var db: Database
 }
 
 const createServer = (routes: Route[]) => {

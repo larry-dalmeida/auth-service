@@ -1,8 +1,7 @@
 import { Request, Response } from "express";
 import { InvalidCredentialsError, MalformedRequestError } from "./errors";
 import UserService from "./UserService";
-import bcrypt from "bcrypt";
-import { UserLoginDTO, UserRegisterDTO } from "./dto";
+import UserEntity from "./UserEntity";
 
 class UserController {
   static GENERIC_ERROR_MESSAGE = "Error logging in";
@@ -12,9 +11,9 @@ class UserController {
   }
 
   async login(req: Request, res: Response) {
-    const userLoginDTO = new UserLoginDTO(req.body);
+    const userEntity = new UserEntity(req.body);
     try {
-      const token = await this.userService.login(userLoginDTO);
+      const token = await this.userService.login(userEntity);
       res.send({ token });
     } catch (error) {
       if (
@@ -29,13 +28,15 @@ class UserController {
   }
 
   async register(req: Request, res: Response) {
-    const userRegistrationDTO = new UserRegisterDTO(req.body);
-
+    const userEntity = new UserEntity(req.body);
     try {
-      const result = await this.userService.register(userRegistrationDTO);
+      userEntity.validate();
+      const result = await this.userService.register(userEntity);
       res.status(201).send(result);
     } catch (error) {
-      console.error(error);
+      if(error instanceof MalformedRequestError) {
+        return res.status(error.code).send(error.message);
+      }
       res.status(500).send("Error registering the user");
     }
   }
