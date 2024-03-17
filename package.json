@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "pm2 start ecosystem.production.config.js",
     "dev": "pm2 start ecosystem.config.js",
     "test": "jest",
     "test:e2e": "jest --config ./jest.e2e.config.js",
