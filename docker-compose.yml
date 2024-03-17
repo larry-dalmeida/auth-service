@@ -1,0 +1,34 @@
+version: '3'
+services:
+  authDB:
+    image: postgres:latest
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=auth_users
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "psql -U postgres -d auth_users -c 'SELECT CURRENT_DATE'",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ./local/init_database_sql:/init_database_sql
+  flyway:
+    image: flyway/flyway
+    depends_on:
+      authDB:
+        condition: service_healthy
+      
+    volumes:
+      - ./migrations:/flyway/sql
+    environment:
+      - FLYWAY_URL=jdbc:postgresql://authDB/auth_users
+      - FLYWAY_USER=postgres
+      - FLYWAY_PASSWORD=postgres
+    command: ["-X", "migrate"]

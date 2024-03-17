@@ -56,8 +56,8 @@ export class UserAlreadyExistsError extends Error {
   message: string;
 
   constructor(
-    customMessage = MalformedRequestError.defaultMessage,
-    code = MalformedRequestError.defaultCode
+    customMessage = UserAlreadyExistsError.defaultMessage,
+    code = UserAlreadyExistsError.defaultCode
   ) {
     super(customMessage);
     this.name = this.constructor.name;

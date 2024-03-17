@@ -4,10 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "pm2 start ecosystem.production.config.js",
-    "dev": "pm2 start ecosystem.config.js",
-    "test": "jest",
-    "test:e2e": "jest --config ./jest.e2e.config.js",
     "prepare": "husky"
   },
   "author": "",
@@ -29,6 +25,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",
+    "@types/morgan": "^1.9.9",
     "@types/node": "^20.11.25",
     "@types/pg": "^8.11.2",
     "husky": "^9.0.11",

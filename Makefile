@@ -1,30 +1,38 @@
-.PHONY: install start test build clean dev e2e
+.PHONY: install start test build clean dev e2e dep-up dep-down build
 
 export PORT=3000
 export JWT_SECRET=r@nd0mS3cr3theR3292833
-export DATABASE_URL=postgres://localhost:5432/auth_users
+export DATABASE_URL=postgres://localhost:5433/auth_users
 export DATABASE_NAME=primary
+
+DOCKER_COMPOSE = docker-compose
+JEST = npx jest
+TSC = npx tsc
+TS_NODE_DEV = npx ts-node-dev
+
+build:
+	$(TSC)
 
 install:
 	npm install
 
-start:
-
 dev:
-	npm run dev
+	$(TS_NODE_DEV) src/index.ts --respawn --transpile-only
+
+dep-up:
+	$(DOCKER_COMPOSE) up
+
+dep-down:
+	$(DOCKER_COMPOSE) down
 
 test:
-	npm test
+	$(JEST) --config ./jest.config.js
 
 e2e:
-	export JWT_SECRET=jao29S#@9%ajwa1342893
-	export DATABASE_URL=postgres://localhost:5432/auth_users_test
-	export DATABASE_NAME=primary_test
-	npm run test:e2e
-
-build:
-	npm run build
+	$(JEST) --config ./jest.e2e.config.js
+	
 
 clean:
 	rm -rf node_modules
-	rm -rf build
+	rm -rf dist
+	rm -rf coverage

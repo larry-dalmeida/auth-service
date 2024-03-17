@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { InvalidCredentialsError, MalformedRequestError } from "./errors";
+import { InvalidCredentialsError, MalformedRequestError, UserAlreadyExistsError } from "./errors";
 import UserService from "./UserService";
 import UserEntity from "./UserEntity";
 
@@ -20,9 +20,9 @@ class UserController {
         error instanceof InvalidCredentialsError ||
         error instanceof MalformedRequestError
       ) {
-        return res.status(error.code).send(error.message);
+        res.status(error.code).send(error.message);
+        return;
       }
-
       res.status(500).send(UserController.GENERIC_ERROR_MESSAGE);
     }
   }
@@ -34,9 +34,11 @@ class UserController {
       const result = await this.userService.register(userEntity);
       res.status(201).send(result);
     } catch (error) {
-      if(error instanceof MalformedRequestError) {
-        return res.status(error.code).send(error.message);
+      if(error instanceof MalformedRequestError || error instanceof UserAlreadyExistsError) {
+        res.status(error.code).send(error.message);
+        return;
       }
+      console.error(error);
       res.status(500).send("Error registering the user");
     }
   }

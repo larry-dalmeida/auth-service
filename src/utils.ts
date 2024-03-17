@@ -17,7 +17,7 @@ export const initializeServer = (config: AppConfig) => {
   return server;
 };
 
-export const startServer = (config) => {
+export const startServer = (config: AppConfig) => {
   const server = initializeServer(config);
   server.listen(config.server.port, () => {
     console.log(`Listening on port ${config.server.port}`);
