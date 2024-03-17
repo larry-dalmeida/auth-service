@@ -1,7 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 
 export class InvalidCredentialsError extends Error {
-  static defaultCode = StatusCodes.FORBIDDEN;
+  static defaultCode = StatusCodes.UNAUTHORIZED;
   static defaultMessage = "Invalid credentials";
 
   code: number;

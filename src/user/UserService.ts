@@ -6,7 +6,7 @@ import {
   MalformedRequestError,
   UserAlreadyExistsError,
 } from "./errors";
-import { UserLoginDTO, UserRegisterDTO } from "./dto";
+import UserEntity from "./UserEntity";
 
 class UserService {
   static getToken(userId: string, jwtSecret: string) {
@@ -30,8 +30,8 @@ class UserService {
     this.jwtSecret = jwtSecret;
   }
 
-  async login(userLoginDTO: UserLoginDTO) {
-    const { email, password } = userLoginDTO;
+  async login(userEntity: UserEntity) {
+    const { email, password } = userEntity;
     if (!email || !password) {
       throw new MalformedRequestError();
     }
@@ -51,8 +51,8 @@ class UserService {
     throw new InvalidCredentialsError();
   }
 
-  async register(userRegistrationDTO: UserRegisterDTO) {
-    const { name, email, password } = userRegistrationDTO;
+  async register(userEntity: UserEntity) {
+    const { email, password } = userEntity;
     const existingUser = await this.userRepository.getUserByEmail(email);
 
     if (existingUser) {
@@ -60,7 +60,7 @@ class UserService {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    return this.userRepository.createUser(name, email, hashedPassword);
+    return this.userRepository.createUser(email, hashedPassword);
   }
 }
 

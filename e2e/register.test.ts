@@ -1,5 +1,6 @@
 import { describe, expect, beforeAll, it } from "@jest/globals";
 import request from "supertest";
+import { pick } from "lodash";
 
 import { initializeServer } from "../src/utils";
 import { generateMockCredentials } from "./mocks";
@@ -19,5 +20,15 @@ describe("Registration", () => {
 
     expect(res.statusCode).toEqual(201);
     expect(res.body).toHaveProperty("id");
+  });
+
+  it("should return a 400 for incomplete registration data", async () => {
+    const credentials = generateMockCredentials();
+
+    const res = await request(server)
+      .post("/register")
+      .send(pick(credentials, ["email", "name"]));
+
+    expect(res.statusCode).toEqual(400);
   });
 });
