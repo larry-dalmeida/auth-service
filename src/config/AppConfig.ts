@@ -1,15 +1,8 @@
-import dotenv from "dotenv";
-
 class AppConfig {
   public db: any;
   public context: any;
   public server: any;
   public auth: any;
-
-  static loadConfig() {
-    const NODE_ENV = process.env.NODE_ENV;
-    dotenv.config(NODE_ENV === "test" ? { path: ".env.test" } : {});
-  }
 
   static configDb() {
     return {
@@ -38,7 +31,6 @@ class AppConfig {
   }
 
   constructor() {
-    AppConfig.loadConfig();
     this.db = AppConfig.configDb();
     this.context = AppConfig.configContext();
     this.server = AppConfig.configServer();

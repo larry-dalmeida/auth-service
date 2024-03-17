@@ -1,5 +1,3 @@
-import dotenv from "dotenv";
-
 import createServer from "./app/server";
 import appRoutes from "./app/routes";
 import UserRoutes from "./user/UserRoutes";
