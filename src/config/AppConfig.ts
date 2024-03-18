@@ -10,6 +10,7 @@ class AppConfig {
   public context: any;
   public server: any;
   public auth: any;
+  public logger: any;
 
   static configDb() {
     return {
@@ -42,11 +43,23 @@ class AppConfig {
     };
   }
 
+  static configLogger() {
+    return {
+      transport: {
+        target: "pino-pretty",
+        options: {
+          colorize: true,
+        },
+      },
+    };
+  }
+
   constructor() {
     this.db = AppConfig.configDb();
     this.context = AppConfig.configContext();
     this.server = AppConfig.configServer();
     this.auth = AppConfig.configAuth();
+    this.logger = AppConfig.configLogger();
   }
 }
 
