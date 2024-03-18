@@ -17,16 +17,16 @@ class Database {
 
   async query<T extends QueryResultRow>(
     text: string,
-    params?: any[]
+    params?: any[],
   ): Promise<QueryResult<T>> {
     let client = null;
     try {
       client = await this.connectionPool.connect();
-      return await client.query(text, params) as QueryResult<T>;
+      return (await client.query(text, params)) as QueryResult<T>;
     } catch (err) {
       console.error(
         err,
-        `[${this.name}] Unexpected error on connection attempt.`
+        `[${this.name}] Unexpected error on connection attempt.`,
       );
       throw err;
     } finally {
@@ -45,7 +45,7 @@ class Database {
   }
 
   setHandlers() {
-    this.connectionPool.on("error", err => {
+    this.connectionPool.on("error", (err) => {
       console.error(err, `[${this.name}] Unexpected error on idle client.`);
       process.exit(-1);
     });

@@ -3,7 +3,7 @@ import appRoutes from "./app/routes";
 import UserRoutes from "./user/UserRoutes";
 import UserController from "./user/UserController";
 import UserRepository from "./user/UserRepository";
-import UserService from './user/UserService';
+import UserService from "./user/UserService";
 import Database from "./app/db";
 import AppConfig from "./config/AppConfig";
 

@@ -1,12 +1,12 @@
 import express from "express";
 import bodyParser from "body-parser";
-import morgan from 'morgan';
+import morgan from "morgan";
 import Database from "./db";
 
 import { Route } from "./types";
 
 declare global {
-  var db: Database
+  var db: Database;
 }
 
 const createServer = (routes: Route[]) => {
@@ -14,7 +14,7 @@ const createServer = (routes: Route[]) => {
 
   // Common Middleware
   app.use(bodyParser.json());
-  app.use(morgan('combined'))
+  app.use(morgan("combined"));
 
   routes.forEach((route: Route) => {
     app[route.method](route.path, route.handler);

@@ -17,14 +17,14 @@ class UserService {
 
   static isValidPassword(
     currentlyProvidedPassword: string,
-    previouslyHashedPassword: string
+    previouslyHashedPassword: string,
   ) {
     return bcrypt.compare(currentlyProvidedPassword, previouslyHashedPassword);
   }
 
   constructor(
     private userRepository: UserRepository,
-    private jwtSecret: string
+    private jwtSecret: string,
   ) {
     this.userRepository = userRepository;
     this.jwtSecret = jwtSecret;
