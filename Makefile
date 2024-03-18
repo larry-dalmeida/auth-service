@@ -1,4 +1,4 @@
-.PHONY: install start test build clean dev e2e dep-up dep-down build
+.PHONY: install start test build clean dev e2e dep-up dep-down build lint format-fix format-staged
 
 export PORT=3000
 export JWT_SECRET=r@nd0mS3cr3theR3292833
@@ -12,6 +12,9 @@ DOCKER_COMPOSE = docker-compose
 JEST = npx jest
 TSC = npx tsc
 TS_NODE_DEV = npx ts-node-dev
+ESLINT = npx eslint
+PRETTIER = npx prettier
+PRETTY_QUICK = npx pretty-quick
 
 build:
 	$(TSC)
@@ -40,3 +43,12 @@ clean:
 	rm -rf node_modules
 	rm -rf dist
 	rm -rf coverage
+
+lint:
+	$(ESLINT) src/
+
+format-fix:
+	$(PRETTIER) . --write
+
+format-staged:
+	$(PRETTY_QUICK) --staged

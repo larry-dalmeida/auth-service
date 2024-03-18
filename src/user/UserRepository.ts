@@ -8,7 +8,7 @@ class UserRepository {
   async createUser(email: string, hashedPassword: string) {
     const result = await this.db.query(
       "INSERT INTO app.users (email, password) VALUES ($1, $2) RETURNING id, email",
-      [email, hashedPassword]
+      [email, hashedPassword],
     );
 
     return result.rows[0];

@@ -14,12 +14,12 @@ class AppConfig {
   static configDb() {
     return {
       name: process.env.DATABASE_INSTANCE_NAME || "default",
-      poolConfig:{
+      poolConfig: {
         database: process.env.DATABASE_NAME,
         port: process.env.DATABASE_PORT ? +process.env.DATABASE_PORT : 5433,
         user: process.env.DATABASE_USER || "postgres",
         password: process.env.DATABASE_PASSWORD || "postgres",
-      }
+      },
     };
   }
 

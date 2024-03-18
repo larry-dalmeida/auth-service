@@ -9,7 +9,7 @@ export class InvalidCredentialsError extends Error {
 
   constructor(
     customMessage = InvalidCredentialsError.defaultMessage,
-    code = InvalidCredentialsError.defaultCode
+    code = InvalidCredentialsError.defaultCode,
   ) {
     super(customMessage);
     this.name = this.constructor.name;
@@ -33,7 +33,7 @@ export class MalformedRequestError extends Error {
 
   constructor(
     customMessage = MalformedRequestError.defaultMessage,
-    code = MalformedRequestError.defaultCode
+    code = MalformedRequestError.defaultCode,
   ) {
     super(customMessage);
     this.name = this.constructor.name;
@@ -57,7 +57,7 @@ export class UserAlreadyExistsError extends Error {
 
   constructor(
     customMessage = UserAlreadyExistsError.defaultMessage,
-    code = UserAlreadyExistsError.defaultCode
+    code = UserAlreadyExistsError.defaultCode,
   ) {
     super(customMessage);
     this.name = this.constructor.name;
