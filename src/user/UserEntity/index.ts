@@ -1,4 +1,4 @@
-import { MalformedRequestError } from "../errors";
+import { MalformedRequestError } from "../../app/errors";
 
 type UserEntityData = {
   email: string;

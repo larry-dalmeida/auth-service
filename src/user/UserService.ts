@@ -5,7 +5,7 @@ import {
   InvalidCredentialsError,
   MalformedRequestError,
   UserAlreadyExistsError,
-} from "./errors";
+} from "../app/errors";
 import UserEntity from "./UserEntity";
 
 class UserService {

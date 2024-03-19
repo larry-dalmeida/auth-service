@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import Database from "./db";
 
 import { Route } from "./types";
+import errorHandler from "./middleware/errorHandler";
 
 declare global {
   var db: Database;
@@ -18,6 +19,8 @@ const createServer = (routes: Route[], logger: any) => {
   routes.forEach((route: Route) => {
     app[route.method](route.path, route.handler);
   });
+
+  app.use(errorHandler);
 
   return app;
 };
