@@ -6,6 +6,7 @@ import { pick } from "lodash";
 import { initializeServer } from "../src/utils";
 import { generateMockCredentials } from "./mocks";
 import AppConfig from "../src/config/AppConfig";
+import { LOGIN_API_URL, REGISTRATION_API_URL } from "./constants";
 
 describe("Login", () => {
   let server: Express;
@@ -17,10 +18,10 @@ describe("Login", () => {
   it("should login a registered user", async () => {
     const credentials = generateMockCredentials();
 
-    await request(server).post("/register").send(credentials);
+    await request(server).post(REGISTRATION_API_URL).send(credentials);
 
     const res = await request(server)
-      .post("/login")
+      .post(LOGIN_API_URL)
       .send(pick(credentials, ["email", "password"]));
 
     expect(res.statusCode).toEqual(200);
@@ -31,7 +32,7 @@ describe("Login", () => {
     const credentials = generateMockCredentials();
 
     const res = await request(server)
-      .post("/login")
+      .post(LOGIN_API_URL)
       .send(pick(credentials, ["email", "password"]));
 
     expect(res.statusCode).toEqual(401);
@@ -42,7 +43,7 @@ describe("Login", () => {
     const credentials = generateMockCredentials();
 
     const res = await request(server)
-      .post("/login")
+      .post(LOGIN_API_URL)
       .send(pick(credentials, ["email"]));
 
     expect(res.statusCode).toEqual(400);

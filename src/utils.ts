@@ -1,5 +1,5 @@
 import createServer from "./app/server";
-import appRoutes from "./app/routes";
+import { getAppRoutesConfig } from "./app/routes";
 import UserRoutes from "./User/UserRoutes";
 import UserController from "./User/UserController";
 import UserRepository from "./User/UserRepository";
@@ -7,17 +7,22 @@ import UserService from "./User/UserService";
 import Database from "./app/db";
 import AppConfig from "./config/AppConfig";
 import logger from "./app/logger";
-import { Route } from "./app/types";
 
 export const initializeServer = (config: AppConfig) => {
   global.db = new Database(config.db);
   const userRepository = new UserRepository(global.db);
   const userService = new UserService(userRepository, config.auth.jwtSecret);
   const userController = new UserController(userService);
-  const userRoutes = new UserRoutes(userController).getRoutes();
-  const routes: Route[] = [...userRoutes, ...appRoutes];
+  const userRoutes = new UserRoutes(userController).getRouteConfig();
+  const appRoutes = getAppRoutesConfig();
   logger.init(config.logger);
-  const server = createServer(routes, logger.get());
+  const server = createServer(
+    {
+      ...userRoutes,
+      ...appRoutes,
+    },
+    logger.get(),
+  );
   return server;
 };
 

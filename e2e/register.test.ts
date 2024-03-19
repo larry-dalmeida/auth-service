@@ -6,6 +6,7 @@ import { Express } from "express";
 import { initializeServer } from "../src/utils";
 import { generateMockCredentials } from "./mocks";
 import AppConfig from "../src/config/AppConfig";
+import { REGISTRATION_API_URL } from "./constants";
 
 describe("Registration", () => {
   let server: Express;
@@ -16,7 +17,7 @@ describe("Registration", () => {
 
   it("should register a new user", async () => {
     const res = await request(server)
-      .post("/register")
+      .post(REGISTRATION_API_URL)
       .send(generateMockCredentials());
 
     expect(res.statusCode).toEqual(201);
@@ -27,7 +28,7 @@ describe("Registration", () => {
     const credentials = generateMockCredentials();
 
     const res = await request(server)
-      .post("/register")
+      .post(REGISTRATION_API_URL)
       .send(pick(credentials, ["email"]));
 
     expect(res.statusCode).toEqual(400);

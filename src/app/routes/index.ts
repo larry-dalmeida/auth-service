@@ -1,12 +1,23 @@
-import { Route } from "../types";
+import express from "express";
+import { Route, RouteConfig } from "../types";
 import health from "../service/health";
 
-const routes: Route[] = [
-  {
-    path: "/health",
-    method: "get",
-    handler: health,
-  },
-];
+export const getAppRoutesConfig = (): RouteConfig => {
+  return {
+    "/": [
+      {
+        path: "/health",
+        method: "get",
+        handler: health,
+      },
+    ],
+  };
+};
 
-export default routes;
+export const getRouterWithRoutes = (routes: Route[]) => {
+  const router = express.Router();
+  routes.forEach((route: Route) => {
+    router[route.method](route.path, route.handler);
+  });
+  return router;
+};
