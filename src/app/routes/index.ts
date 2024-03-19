@@ -6,7 +6,7 @@ export const getAppRoutesConfig = (): RouteConfig => {
   return {
     "/": [
       {
-        path: "/health",
+        path: "/healthz",
         method: "get",
         handler: health,
       },
