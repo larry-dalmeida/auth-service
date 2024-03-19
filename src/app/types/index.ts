@@ -5,3 +5,7 @@ export type Route = {
   method: "get" | "post" | "put" | "delete" | "patch";
   handler: (req: Request, res: Response, next: NextFunction) => void;
 };
+
+export type RouteConfig = {
+  [root: string]: Route[];
+};

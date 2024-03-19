@@ -2,22 +2,23 @@ import express from "express";
 import bodyParser from "body-parser";
 import Database from "./db";
 
-import { Route } from "./types";
+import { RouteConfig } from "./types";
 import errorHandler from "./middleware/errorHandler";
+import { getRouterWithRoutes } from "./routes";
 
 declare global {
   var db: Database;
 }
 
-const createServer = (routes: Route[], logger: any) => {
+const createServer = (routeConfig: RouteConfig, logger: any) => {
   const app = express();
 
   // Common Middleware
   app.use(bodyParser.json());
   app.use(logger);
 
-  routes.forEach((route: Route) => {
-    app[route.method](route.path, route.handler);
+  Object.keys(routeConfig).forEach((rootPath) => {
+    app.use(rootPath, getRouterWithRoutes(routeConfig[rootPath]));
   });
 
   app.use(errorHandler);
