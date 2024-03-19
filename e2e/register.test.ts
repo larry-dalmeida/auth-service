@@ -28,7 +28,7 @@ describe("Registration", () => {
 
     const res = await request(server)
       .post("/register")
-      .send(pick(credentials, ["email", "name"]));
+      .send(pick(credentials, ["email"]));
 
     expect(res.statusCode).toEqual(400);
   });

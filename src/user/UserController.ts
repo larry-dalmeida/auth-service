@@ -1,21 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { ApplicationError, InternalSeverError } from "../app/errors";
+import { ApplicationError } from "../app/errors";
 import UserService from "./UserService";
 import UserEntity from "./UserEntity";
-import { StatusCodes } from "http-status-codes";
 
 class UserController {
-  static handleUncaughtErrors(err: Error, genericErrorMessage: string) {
-    const isExpectedError = err instanceof ApplicationError;
-    return isExpectedError
-      ? err
-      : new InternalSeverError(
-          genericErrorMessage,
-          StatusCodes.INTERNAL_SERVER_ERROR,
-          err,
-        );
-  }
-
   static errorMessages = {
     login:
       "Oops! Something went wrong while trying to log you in. We now know about it and are looking into it. Please try again later.",
@@ -34,7 +22,7 @@ class UserController {
       res.send({ token });
     } catch (error) {
       next(
-        UserController.handleUncaughtErrors(
+        ApplicationError.getEnrichedError(
           error,
           UserController.errorMessages.login,
         ),
@@ -45,12 +33,12 @@ class UserController {
   async register(req: Request, res: Response, next: NextFunction) {
     const userEntity = new UserEntity(req.body);
     try {
-      userEntity.validate();
+      await userEntity.validate();
       const result = await this.userService.register(userEntity);
       res.status(201).send(result);
     } catch (error) {
       next(
-        UserController.handleUncaughtErrors(
+        ApplicationError.getEnrichedError(
           error,
           UserController.errorMessages.registration,
         ),

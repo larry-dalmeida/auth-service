@@ -1,8 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-import { ApplicationError, InternalSeverError } from "../../errors";
-import { StatusCodes } from "http-status-codes";
+import { ApplicationError } from "../../errors";
+import { ValidationError } from "joi";
 
-type CustomError = ApplicationError | Error;
+type CustomError = ApplicationError | ValidationError | Error;
+
+const genericErrorMessage =
+  "Oops! Something went wrong. We now know about it and are working hard to fix it. Please try again later.";
 
 function errorHandler(
   err: CustomError,
@@ -10,14 +13,7 @@ function errorHandler(
   res: Response,
   _next: NextFunction,
 ) {
-  const isExpectedApplicationError = err instanceof ApplicationError;
-  const error: ApplicationError = isExpectedApplicationError
-    ? err
-    : new InternalSeverError(
-        err.message,
-        StatusCodes.INTERNAL_SERVER_ERROR,
-        err,
-      );
+  const error = ApplicationError.getEnrichedError(err, genericErrorMessage);
 
   res.statusCode = error.code;
 

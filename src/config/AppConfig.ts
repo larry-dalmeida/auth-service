@@ -44,14 +44,15 @@ class AppConfig {
   }
 
   static configLogger() {
-    return {
-      transport: {
-        target: "pino-pretty",
-        options: {
-          colorize: true,
-        },
-      },
-    };
+    // return {
+    //   transport: {
+    //     target: "pino-pretty",
+    //     options: {
+    //       colorize: true,
+    //     },
+    //   },
+    // };
+    return undefined;
   }
 
   constructor() {

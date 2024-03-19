@@ -1,4 +1,4 @@
-import { MalformedRequestError } from "../../app/errors";
+import Joi, { ValidationResult, ValidationError } from "joi";
 
 type UserEntityData = {
   email: string;
@@ -9,26 +9,24 @@ class UserEntity {
   email: string;
   password: string;
 
+  static schema = Joi.object({
+    email: Joi.string().email().required(),
+    password: Joi.string().min(6).required(),
+  });
+
   constructor(data: UserEntityData) {
     this.email = data.email;
     this.password = data.password;
   }
 
-  validateEmail() {
-    if (!this.email) {
-      throw new MalformedRequestError("Email is required");
-    }
-  }
-
-  validatePassword() {
-    if (!this.password) {
-      throw new MalformedRequestError("Password is required");
-    }
-  }
-
   validate() {
-    this.validateEmail();
-    this.validatePassword();
+    const result: ValidationResult = UserEntity.schema.validate({
+      email: this.email,
+      password: this.password,
+    });
+    if (result.error instanceof ValidationError) {
+      throw result.error;
+    }
   }
 }
 
